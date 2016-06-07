@@ -31,4 +31,20 @@ class DocumentForm(forms.Form):
 ```
 and you are done!
 
+* A little change had been made just to get rid of a syntax error due to django version upgrade. I used the latest version for this project which is [version - 1.9](https://docs.djangoproject.com/en/1.9/releases/1.9/). The edited file is **imagic/views.py**, watch out the comment in the code :
+```
+def list(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newdoc = Document(docfile=request.FILES['docfile'])
+            newdoc.save()
+
+            # Redirect to the document list after POST
+            # takes the argument(reverse) as the name of the file paased in url.py
+            # this line has been edited
+            return HttpResponseRedirect(reverse('list'))
+```         
+
 **Happy Coding** :+1:
